@@ -21,3 +21,7 @@ struct ContentView: View {
 #Preview {
     ContentView()
 }
+
+class APODViewModel: ObservableObject {
+    @Published var apod: APOD?
+}
