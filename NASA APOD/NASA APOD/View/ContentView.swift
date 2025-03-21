@@ -17,12 +17,19 @@ struct ContentView: View {
         NavigationView {
             VStack {
                 Text(viewModel.apod?.title ?? "nothing")
-                    .navigationTitle("NASA APOD")
+                    .font(.title2)
                     
                 Text(viewModel.apod?.explanation ?? "nothing")
-                Text(viewModel.apod?.date ?? "nothing")
+                    .font(.body)
+                
+                HStack {
+                    Spacer()
+                    Text(viewModel.apod?.date ?? "nothing")
+                        .font(.body)
+                }
                 Spacer()
             }
+            .navigationTitle("NASA APOD")
             .padding()
             .task {
                 await viewModel.fetchAPOD()
