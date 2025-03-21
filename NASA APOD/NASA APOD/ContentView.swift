@@ -18,13 +18,15 @@ struct ContentView: View {
             VStack {
                 Text(viewModel.apod?.title ?? "nothing")
                     .navigationTitle("NASA APOD")
-                    .task {
-                        await viewModel.fetchAPOD()
-                    }
+                    
                 Text(viewModel.apod?.explanation ?? "nothing")
                 Text(viewModel.apod?.date ?? "nothing")
+                Spacer()
             }
             .padding()
+            .task {
+                await viewModel.fetchAPOD()
+            }
         }
     }
 }
