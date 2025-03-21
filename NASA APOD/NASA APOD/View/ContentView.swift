@@ -42,21 +42,3 @@ struct ContentView: View {
     ContentView()
 }
 
-class APODViewModel: ObservableObject {
-    @Published var apod: APOD?
-    @Published var error: NetworkError?
-    
-    private let networkManger: NetworkManager
-    
-    init(networkManger: NetworkManager) {
-        self.networkManger = networkManger
-    }
-    
-    func fetchAPOD() async {
-        do {
-            self.apod = try await networkManger.fetch(from: Constant.url)
-        } catch {
-            self.error = .unknownError(statusCode: 0)
-        }
-    }
-}
