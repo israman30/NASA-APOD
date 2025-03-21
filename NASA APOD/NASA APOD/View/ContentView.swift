@@ -77,14 +77,14 @@ struct CacheAsyncImage: View {
                     .aspectRatio(contentMode: .fit)
             } else {
                 ProgressView()
-                    .onAppear {
-                        loadImage()
+                    .task {
+                        await loadImage()
                     }
             }
         }
     }
     
-    private func loadImage() {
+    private func loadImage() async {
         let nsURL = url as NSURL
         if let cachedImage = ImageCache.shared.image(for: nsURL) {
             self.image = Image(uiImage: cachedImage)
