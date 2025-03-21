@@ -15,28 +15,30 @@ struct ContentView: View {
     
     var body: some View {
         NavigationView {
-            VStack {
-                if let urlString = viewModel.apod?.hdurl, let url = URL(string: urlString) {
-                    CacheAsyncImage(url: url)
-                }
-                
-                Text(viewModel.apod?.title ?? "nothing")
-                    .font(.title2)
+            ScrollView {
+                VStack {
+                    if let urlString = viewModel.apod?.hdurl, let url = URL(string: urlString) {
+                        CacheAsyncImage(url: url)
+                    }
                     
-                Text(viewModel.apod?.explanation ?? "nothing")
-                    .font(.body)
-                
-                HStack {
-                    Spacer()
-                    Text(viewModel.apod?.date ?? "nothing")
+                    Text(viewModel.apod?.title ?? "nothing")
+                        .font(.title2)
+                    
+                    Text(viewModel.apod?.explanation ?? "nothing")
                         .font(.body)
+                    
+                    HStack {
+                        Spacer()
+                        Text(viewModel.apod?.date ?? "nothing")
+                            .font(.body)
+                    }
+                    Spacer()
                 }
-                Spacer()
-            }
-            .navigationTitle("NASA APOD")
-            .padding()
-            .task {
-                await viewModel.fetchAPOD()
+                .navigationTitle("NASA APOD")
+                .padding()
+                .task {
+                    await viewModel.fetchAPOD()
+                }
             }
         }
     }
