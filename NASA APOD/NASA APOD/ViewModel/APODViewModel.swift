@@ -23,6 +23,7 @@ final class APODViewModel: APODViewModelProtocol {
     }
     
     func fetchAPOD(with date: String?) async {
+        print("input date: \(date ?? "nada")")
         do {
             self.apod = try await networkManger.fetch(date: date)
         } catch {

@@ -12,7 +12,6 @@ struct ContentView: View {
     
     @StateObject var viewModel = APODViewModel(networkManger: NetworkManager())
     @State var currentDate = Date.now
-    @State var newDate = ""
     
     var body: some View {
         NavigationView {
@@ -24,11 +23,35 @@ struct ContentView: View {
                 .onChange(of: currentDate) { newValue in
                     print("\(currentDate) -> \(newValue)")
                     self.currentDate = newValue
+                    Task {
+                        await viewModel.fetchAPOD(with: currentDate.formatted(.iso8601.year().month().day()))
+                    }
                 }
                 
                 VStack {
                     if let urlString = viewModel.apod?.hdurl, let url = URL(string: urlString) {
-                        CacheAsyncImage(url: url)
+//                        CacheAsyncImage(url: url)
+                        AsyncImage(url: url) { phase in
+                            switch phase {
+                            case .success(let image):
+                                image
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                            case .empty:
+                                Image(systemName: "Placeholder Image")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                            case .failure(_):
+                                Image(systemName: "Error Image")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                            @unknown default:
+                                Image(systemName: "Placeholder Image")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                            }
+                        }
+                            
                     }
                     
                     Text(viewModel.apod?.title ?? "nothing")
