@@ -4,22 +4,26 @@
 //
 //  Created by Israel Manzo on 3/20/25.
 //
+// https://api.nasa.gov/planetary/apod?api_key=tXNvkBhAvgNMi8HR7pJX3PXbxUx3df95cMwiT2g0
 
 import SwiftUI
-
-// https://api.nasa.gov/planetary/apod?api_key=tXNvkBhAvgNMi8HR7pJX3PXbxUx3df95cMwiT2g0
 
 struct ContentView: View {
     
     @StateObject var viewModel = APODViewModel(networkManger: NetworkManager())
     @State var currentDate = Date.now
+    @State var newDate = ""
     
     var body: some View {
         NavigationView {
             ScrollView {
                 
                 DatePicker(selection: $currentDate, displayedComponents: .date) {
-                    Text("\(currentDate)")
+                    Text("\(currentDate.formatted(.iso8601.year().month().day()))")
+                }
+                .onChange(of: currentDate) { newValue in
+                    print("\(currentDate) -> \(newValue)")
+                    self.currentDate = newValue
                 }
                 
                 VStack {
@@ -43,7 +47,7 @@ struct ContentView: View {
                 .navigationTitle("NASA APOD")
                 .padding()
                 .task {
-                    await viewModel.fetchAPOD(with: "2025-03-21")
+                    await viewModel.fetchAPOD(with: currentDate.formatted(.iso8601.year().month().day()))
                 }
             }
         }

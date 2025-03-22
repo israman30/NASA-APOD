@@ -8,19 +8,9 @@
 import SwiftUI
 
 struct URLScheme {
+    /// API key should be hidden
     static var apiKey: String {
         "tXNvkBhAvgNMi8HR7pJX3PXbxUx3df95cMwiT2g0"
-    }
-    
-    static var baseURL: String {
-        "https://api.nasa.gov/planetary/apod?"
-    }
-    
-    static var url: URL {
-        guard let url = URL(string: "\(baseURL)api_key=\(apiKey)") else {
-            fatalError("Invalid URL")
-        }
-        return url
     }
 }
 
