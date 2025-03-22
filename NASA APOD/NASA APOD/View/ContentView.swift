@@ -21,7 +21,6 @@ struct ContentView: View {
                     Text("\(currentDate.formatted(.iso8601.year().month().day()))")
                 }
                 .onChange(of: currentDate) { newValue in
-                    print("\(currentDate) -> \(newValue)")
                     self.currentDate = newValue
                     Task {
                         await viewModel.fetchAPOD(with: currentDate.formatted(.iso8601.year().month().day()))
@@ -30,7 +29,6 @@ struct ContentView: View {
                 
                 VStack {
                     if let urlString = viewModel.apod?.hdurl, let url = URL(string: urlString) {
-//                        CacheAsyncImage(url: url)
                         AsyncImage(url: url) { phase in
                             switch phase {
                             case .success(let image):
@@ -51,7 +49,6 @@ struct ContentView: View {
                                     .aspectRatio(contentMode: .fit)
                             }
                         }
-                            
                     }
                     
                     Text(viewModel.apod?.title ?? "nothing")
