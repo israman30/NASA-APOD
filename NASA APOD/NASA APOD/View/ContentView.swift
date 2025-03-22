@@ -12,10 +12,16 @@ import SwiftUI
 struct ContentView: View {
     
     @StateObject var viewModel = APODViewModel(networkManger: NetworkManager())
+    @State var currentDate = Date.now
     
     var body: some View {
         NavigationView {
             ScrollView {
+                
+                DatePicker(selection: $currentDate, displayedComponents: .date) {
+                    Text("\(currentDate)")
+                }
+                
                 VStack {
                     if let urlString = viewModel.apod?.hdurl, let url = URL(string: urlString) {
                         CacheAsyncImage(url: url)
@@ -37,7 +43,7 @@ struct ContentView: View {
                 .navigationTitle("NASA APOD")
                 .padding()
                 .task {
-                    await viewModel.fetchAPOD()
+                    await viewModel.fetchAPOD(with: "2025-03-21")
                 }
             }
         }

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Constant {
+struct URLScheme {
     static var apiKey: String {
         "tXNvkBhAvgNMi8HR7pJX3PXbxUx3df95cMwiT2g0"
     }
@@ -30,6 +30,7 @@ enum NetworkError: Error {
     case clientError(statusCode: Int)
     case serverError(statusCode: Int)
     case unknownError(statusCode: Int)
+    case invalidURL
 }
 
 extension NetworkError {
@@ -45,17 +46,22 @@ extension NetworkError {
             return "Server error: \(code)"
         case .unknownError:
             return "Unknown error"
+        case .invalidURL:
+            return "Invalid URL"
         }
     }
 }
 
 protocol NetworkManagerProtocol {
-    func fetch<T: Decodable>(from endpoint: URL) async throws -> T
+    func fetch<T: Decodable>(date: String?) async throws -> T
 }
 
 class NetworkManager: NetworkManagerProtocol {
-    func fetch<T: Decodable>(from endpoint: URL) async throws -> T {
-        let (data, response) = try await URLSession.shared.data(from: endpoint)
+    
+    func fetch<T: Decodable>(date: String?) async throws -> T {
+        let url = try await query(with: date)
+        
+        let (data, response) = try await URLSession.shared.data(from: url)
         
         guard let httpResponse = response as? HTTPURLResponse else {
             throw NetworkError.invalidateResponse
@@ -82,5 +88,22 @@ class NetworkManager: NetworkManagerProtocol {
         default:
             throw NetworkError.unknownError(statusCode: response.statusCode)
         }
+    }
+    
+    func query(with date: String? = nil) async throws -> URL {
+        var request = URLComponents()
+        request.scheme = "https"
+        request.host = "api.nasa.gov"
+        request.path = "/planetary/apod"
+        request.queryItems = [URLQueryItem(name: "api_key", value: URLScheme.apiKey)]
+        if let date = date {
+            request.queryItems?.append(URLQueryItem(name: "date", value: date))
+        }
+        
+        guard let url = request.url else {
+            throw NetworkError.invalidURL
+        }
+        print("URL: \(url)")
+        return url
     }
 }
