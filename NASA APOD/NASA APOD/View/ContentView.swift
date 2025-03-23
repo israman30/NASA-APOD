@@ -36,7 +36,7 @@ struct ContentView: View {
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                             case .empty:
-                                Image(systemName: "Placeholder Image")
+                                Image(systemName: "photo.artframe")
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                             case .failure(_):
@@ -44,7 +44,7 @@ struct ContentView: View {
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                             @unknown default:
-                                Image(systemName: "Placeholder Image")
+                                Image(systemName: "photo.artframe")
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                             }
