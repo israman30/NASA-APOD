@@ -8,7 +8,7 @@
 import SwiftUI
 
 protocol APODViewModelProtocol: ObservableObject {
-    func fetchAPOD() async
+    func fetchAPOD(with date: String?) async
 }
 
 @MainActor
@@ -22,9 +22,10 @@ final class APODViewModel: APODViewModelProtocol {
         self.networkManger = networkManger
     }
     
-    func fetchAPOD() async {
+    func fetchAPOD(with date: String?) async {
+        print("input date: \(date ?? "nada")")
         do {
-            self.apod = try await networkManger.fetch(from: Constant.url)
+            self.apod = try await networkManger.fetch(date: date)
         } catch {
             self.error = .unknownError(statusCode: 0)
         }

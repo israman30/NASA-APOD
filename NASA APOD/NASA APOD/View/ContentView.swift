@@ -4,21 +4,51 @@
 //
 //  Created by Israel Manzo on 3/20/25.
 //
+// https://api.nasa.gov/planetary/apod?api_key=tXNvkBhAvgNMi8HR7pJX3PXbxUx3df95cMwiT2g0
 
 import SwiftUI
-
-// https://api.nasa.gov/planetary/apod?api_key=tXNvkBhAvgNMi8HR7pJX3PXbxUx3df95cMwiT2g0
 
 struct ContentView: View {
     
     @StateObject var viewModel = APODViewModel(networkManger: NetworkManager())
+    @State var currentDate = Date.now
     
     var body: some View {
         NavigationView {
             ScrollView {
+                
+                DatePicker(selection: $currentDate, displayedComponents: .date) {
+                    Text("\(currentDate.formatted(.iso8601.year().month().day()))")
+                }
+                .onChange(of: currentDate) { newValue in
+                    self.currentDate = newValue
+                    Task {
+                        await viewModel.fetchAPOD(with: currentDate.formatted(.iso8601.year().month().day()))
+                    }
+                }
+                
                 VStack {
                     if let urlString = viewModel.apod?.hdurl, let url = URL(string: urlString) {
-                        CacheAsyncImage(url: url)
+                        AsyncImage(url: url) { phase in
+                            switch phase {
+                            case .success(let image):
+                                image
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                            case .empty:
+                                Image(systemName: "photo.artframe")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                            case .failure(_):
+                                Image(systemName: "photo.artframe")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                            @unknown default:
+                                Image(systemName: "photo.artframe")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                            }
+                        }
                     }
                     
                     Text(viewModel.apod?.title ?? "nothing")
@@ -37,7 +67,7 @@ struct ContentView: View {
                 .navigationTitle("NASA APOD")
                 .padding()
                 .task {
-                    await viewModel.fetchAPOD()
+                    await viewModel.fetchAPOD(with: viewModel.apod?.date ?? "")
                 }
             }
         }
