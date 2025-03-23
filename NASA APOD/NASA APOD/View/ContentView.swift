@@ -36,15 +36,15 @@ struct ContentView: View {
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                             case .empty:
-                                Image(systemName: "Placeholder Image")
+                                Image(systemName: "photo.artframe")
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                             case .failure(_):
-                                Image(systemName: "Error Image")
+                                Image(systemName: "photo.artframe")
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                             @unknown default:
-                                Image(systemName: "Placeholder Image")
+                                Image(systemName: "photo.artframe")
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                             }
@@ -67,7 +67,7 @@ struct ContentView: View {
                 .navigationTitle("NASA APOD")
                 .padding()
                 .task {
-                    await viewModel.fetchAPOD(with: currentDate.formatted(.iso8601.year().month().day()))
+                    await viewModel.fetchAPOD(with: viewModel.apod?.date ?? "")
                 }
             }
         }
