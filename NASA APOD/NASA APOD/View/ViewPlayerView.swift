@@ -28,9 +28,10 @@ struct VideoPlayerView: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: WKWebView, context: Context) {
-        guard let videoURLString = videoURLString else { return }
+        guard let videoURLString = videoURLString,
+              let urlString = URL(string: videoURLString) else { return }
         uiView.scrollView.isScrollEnabled = false
-        let request = URLRequest(url: URL(string: videoURLString)!)
+        let request = URLRequest(url: urlString)
         uiView.load(request)
     }
 }
