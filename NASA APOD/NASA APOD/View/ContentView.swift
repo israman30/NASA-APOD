@@ -36,7 +36,7 @@ struct ContentView: View {
     
     private var mainBody: some View {
         VStack {
-            if viewModel.apod?.hdurl == nil && viewModel.apod?.media_type == "image" {
+            if viewModel.apod?.hdurl != nil && viewModel.apod?.media_type == "image" {
                 if let urlString = viewModel.apod?.hdurl, let url = URL(string: urlString) {
                     AsyncImage(url: url) { phase in
                         switch phase {
@@ -62,6 +62,7 @@ struct ContentView: View {
             } else {
                 ViewPlayerView(videoURLString: viewModel.apod?.url)
             }
+            
             Text(viewModel.apod?.title ?? "nothing")
                 .font(.title2)
             

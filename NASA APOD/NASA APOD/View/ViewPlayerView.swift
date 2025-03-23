@@ -6,19 +6,34 @@
 //
 
 import SwiftUI
-import AVKit
+import WebKit
 
 struct ViewPlayerView: View {
     let videoURLString: String?
     
     var body: some View {
-        if let videoString = videoURLString, let url = URL(string: videoString)  {
-            VideoPlayer(player: AVPlayer(url: url))
+        VStack {
+            VideoPlayerView(videoURLString: videoURLString)
                 .scaledToFit()
         }
     }
 }
 
+struct VideoPlayerView: UIViewRepresentable {
+    
+    let videoURLString: String?
+    
+    func makeUIView(context: Context) -> WKWebView {
+        WKWebView()
+    }
+    
+    func updateUIView(_ uiView: WKWebView, context: Context) {
+        guard let videoURLString = videoURLString else { return }
+        uiView.scrollView.isScrollEnabled = false
+        let request = URLRequest(url: URL(string: videoURLString)!)
+        uiView.load(request)
+    }
+}
 
 #Preview {
     ViewPlayerView(videoURLString: "https://www.youtube.com/embed/CC7OJ7gFLvE?rel=0")
