@@ -16,7 +16,6 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             ScrollView {
-                
                 DatePicker(selection: $currentDate, displayedComponents: .date) {
                     Text("\(currentDate.formatted(.iso8601.year().month().day()))")
                 }
@@ -30,40 +29,39 @@ struct ContentView: View {
                     await viewModel.fetchAPOD(with: "2021-10-11")
                 }
                 
-                if viewModel.apod?.hdurl == nil && viewModel.apod?.media_type == "image" {
-                    imageType
-                } else {
-                    videotype
-                }
+                mainBody
             }
         }
     }
     
-    private var imageType: some View {
+    private var mainBody: some View {
         VStack {
-            if let urlString = viewModel.apod?.hdurl, let url = URL(string: urlString) {
-                AsyncImage(url: url) { phase in
-                    switch phase {
-                    case .success(let image):
-                        image
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                    case .empty:
-                        Image(systemName: "photo.artframe")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                    case .failure(_):
-                        Image(systemName: "photo.artframe")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                    @unknown default:
-                        Image(systemName: "photo.artframe")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
+            if viewModel.apod?.hdurl == nil && viewModel.apod?.media_type == "image" {
+                if let urlString = viewModel.apod?.hdurl, let url = URL(string: urlString) {
+                    AsyncImage(url: url) { phase in
+                        switch phase {
+                        case .success(let image):
+                            image
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                        case .empty:
+                            Image(systemName: "photo.artframe")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                        case .failure(_):
+                            Image(systemName: "photo.artframe")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                        @unknown default:
+                            Image(systemName: "photo.artframe")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                        }
                     }
                 }
+            } else {
+                ViewPlayerView(videoURLString: viewModel.apod?.url)
             }
-            
             Text(viewModel.apod?.title ?? "nothing")
                 .font(.title2)
             
@@ -78,26 +76,6 @@ struct ContentView: View {
             Spacer()
         }
         .navigationTitle("NASA APOD")
-        .padding()
-    }
-    
-    private var videotype: some View {
-        VStack {
-            ViewPlayerView(videoURLString: viewModel.apod?.url)
-            
-            Text(viewModel.apod?.title ?? "nothing")
-                .font(.title2)
-            
-            Text(viewModel.apod?.explanation ?? "nothing")
-                .font(.body)
-            
-            HStack {
-                Spacer()
-                Text(viewModel.apod?.date ?? "nothing")
-                    .font(.body)
-            }
-            Spacer()
-        }
         .padding()
     }
 }
