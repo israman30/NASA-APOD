@@ -8,12 +8,13 @@
 import SwiftUI
 
 struct URLScheme {
-    /// API key should be hidden
+    // TODO: - API key should be hidden
     static var apiKey: String {
         "tXNvkBhAvgNMi8HR7pJX3PXbxUx3df95cMwiT2g0"
     }
 }
 
+/// Enumeration representing various error cases.
 enum NetworkError: Error {
     case invalidateResponse
     case decondingFailed
@@ -42,6 +43,7 @@ extension NetworkError {
     }
 }
 
+/// The `NetworkManagerProtocol` defines the methods for a client manager responsible for fetching data from the internet.
 protocol NetworkManagerProtocol {
     func fetch<T: Decodable>(date: String?) async throws -> T
 }
@@ -67,6 +69,7 @@ class NetworkManager: NetworkManagerProtocol {
         }
     }
     
+    /// Error `statusCode`checks the status code of the HTTP response.
     func invalid(_ response: HTTPURLResponse) throws {
         switch response.statusCode {
         case 200...399:
@@ -80,6 +83,8 @@ class NetworkManager: NetworkManagerProtocol {
         }
     }
     
+    /// `query() Asynchronously` builds the endpoint query
+    ///     - Parameter date: Specifies the date used to query a new item.
     func query(with date: String? = nil) async throws -> URL {
         var request = URLComponents()
         request.scheme = "https"

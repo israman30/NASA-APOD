@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+/// Protocol `APODViewModelProtocol` defines the functionality for fetching data.
+/// - Parameter date: The date used for fetching data. Defaults to the current date, but can be set to fetch data for a specific date as needed.
 protocol APODViewModelProtocol: ObservableObject {
     func fetchAPOD(with date: String?) async
 }
@@ -15,6 +17,7 @@ protocol APODViewModelProtocol: ObservableObject {
 final class APODViewModel: APODViewModelProtocol {
     @Published var apod: APOD?
     @Published var error: NetworkError?
+    @Published var currentDate = Date.now
     
     private let networkManger: NetworkManager
     
