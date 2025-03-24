@@ -41,6 +41,7 @@ struct ContentView: View {
     }
     
     private var mainBody: some View {
+        /// Displays media content `(image, video, or placeholder)` based on the API response.
         VStack {
             if viewModel.apod?.hdurl != nil && viewModel.apod?.media_type == "image" {
                 if let urlString = viewModel.apod?.hdurl, let url = URL(string: urlString) {
@@ -71,6 +72,7 @@ struct ContentView: View {
             } else {
                 ViewPlayerView(videoURLString: viewModel.apod?.url)
             }
+            /// Section displaying text based on API response
             VStack {
                 Text(viewModel.apod?.title ?? "not title")
                     .font(.title2)
