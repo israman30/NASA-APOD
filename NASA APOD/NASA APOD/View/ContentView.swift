@@ -10,20 +10,20 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @StateObject var viewModel = APODViewModel(networkManger: NetworkManager())
-    @State var currentDate = Date.now
+    @StateObject private var viewModel = APODViewModel(networkManger: NetworkManager())
     
     var body: some View {
         NavigationView {
             ScrollView {
-                DatePicker(selection: $currentDate, displayedComponents: .date) {
-                    Text("\(currentDate.formatted(.iso8601.year().month().day()))")
+                DatePicker(selection: $viewModel.currentDate, displayedComponents: .date) {
+                    Text("Select Date")
+                        .font(.body)
                 }
                 .padding(.horizontal)
-                .onChange(of: currentDate) { newValue in
-                    self.currentDate = newValue
+                .onChange(of: viewModel.currentDate) { newValue in
+                    self.viewModel.currentDate = newValue
                     Task {
-                        await fetchAPOD(date: currentDate.formatted(.iso8601.year().month().day()))
+                        await fetchAPOD(date: viewModel.currentDate.formatted(.iso8601.year().month().day()))
                     }
                 }
                 .task {
@@ -35,6 +35,7 @@ struct ContentView: View {
         }
     }
     
+    /// use` fetchAPOD()` for call viewModel object when View `appears` and `updates`
     private func fetchAPOD(date: String) async {
         await viewModel.fetchAPOD(with: date)
     }
@@ -67,22 +68,23 @@ struct ContentView: View {
             } else {
                 ViewPlayerView(videoURLString: viewModel.apod?.url)
             }
-            
-            Text(viewModel.apod?.title ?? "no title")
-                .font(.title2)
-            
-            Text(viewModel.apod?.explanation ?? "not explanation")
-                .font(.body)
-            
-            HStack {
-                Spacer()
-                Text(viewModel.apod?.date ?? "not date")
+            VStack {
+                Text(viewModel.apod?.title ?? "not title")
+                    .font(.title2)
+                
+                Text(viewModel.apod?.explanation ?? "not explanation")
                     .font(.body)
+                
+                HStack {
+                    Spacer()
+                    Text("Current date: \(viewModel.apod?.date ?? "not date")")
+                        .font(.body)
+                }
+                Spacer()
             }
-            Spacer()
+            .padding()
         }
         .navigationTitle("NASA APOD")
-        .padding()
     }
 }
 
