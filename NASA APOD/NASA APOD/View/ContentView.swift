@@ -38,12 +38,16 @@ struct ContentView: View {
     /// use` fetchAPOD()` for call viewModel object when View `appears` and `updates`
     private func fetchAPOD(date: String) async {
         await viewModel.fetchAPOD(with: date)
+        viewModel.retrieved()
     }
     
     private var mainBody: some View {
+        /// Displays media content `(image, video, or placeholder)` based on the API response.
         VStack {
             if viewModel.apod?.hdurl != nil && viewModel.apod?.media_type == "image" {
-                if let urlString = viewModel.apod?.hdurl, let url = URL(string: urlString) {
+                if let urlString = viewModel.apod?.hdurl,
+                   let savedUrlString = viewModel.savedData?.hdurl,
+                   let url = URL(string: urlString.isEmpty ? savedUrlString : urlString) {
                     AsyncImage(url: url) { phase in
                         switch phase {
                         case .success(let image):
@@ -65,20 +69,32 @@ struct ContentView: View {
                         }
                     }
                 }
+            } else if viewModel.apod?.url == nil && viewModel.apod?.media_type == "other" {
+                Text("No image available")
+                    .font(.caption)
             } else {
                 ViewPlayerView(videoURLString: viewModel.apod?.url)
             }
+            /// Section displaying text based on API response
             VStack {
-                Text(viewModel.apod?.title ?? "not title")
-                    .font(.title2)
+                if let title = viewModel.apod?.title,
+                   let savedTitle = viewModel.savedData?.title {
+                    Text(savedTitle.isEmpty ? title : savedTitle)
+                        .font(.title2)
+                }
                 
-                Text(viewModel.apod?.explanation ?? "not explanation")
-                    .font(.body)
+                if let explanation = viewModel.apod?.explanation,
+                   let savedExplanation = viewModel.savedData?.explanation {
+                    Text(savedExplanation.isEmpty ? explanation : savedExplanation)
+                        .font(.body)
+                }
                 
                 HStack {
                     Spacer()
-                    Text("Current date: \(viewModel.apod?.date ?? "not date")")
-                        .font(.body)
+                    if let date = viewModel.apod?.date, let saveDate = viewModel.savedData?.date {
+                        Text("Current date: \(saveDate.isEmpty ? date : saveDate)")
+                            .font(.body)
+                    }
                 }
                 Spacer()
             }
