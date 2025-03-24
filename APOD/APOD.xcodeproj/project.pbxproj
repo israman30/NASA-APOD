@@ -6,33 +6,20 @@
 	objectVersion = 77;
 	objects = {
 
-/* Begin PBXBuildFile section */
-		4D8C2AAB2D8CF1C100458E07 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D8C2AA32D8CF1C100458E07 /* Preview Assets.xcassets */; };
-		4D8C2AAC2D8CF1C100458E07 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D8C2AA62D8CF1C100458E07 /* Assets.xcassets */; };
-		4D8C2AAD2D8CF1C100458E07 /* APOD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8C2AA52D8CF1C100458E07 /* APOD.swift */; };
-		4D8C2AAE2D8CF1C100458E07 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8C2AA72D8CF1C100458E07 /* ContentView.swift */; };
-		4D8C2AAF2D8CF1C100458E07 /* NASA_APODApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8C2AA82D8CF1C100458E07 /* NASA_APODApp.swift */; };
-		4D8C2AB02D8CF1C100458E07 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8C2AA92D8CF1C100458E07 /* NetworkManager.swift */; };
-		4D8C2AB62D8CF7E300458E07 /* APODViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8C2AB52D8CF7E300458E07 /* APODViewModel.swift */; };
-		4D8C2ABA2D8DC96900458E07 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8C2AB92D8DC96900458E07 /* ImageCache.swift */; };
-		4D8C2ABC2D8FBC5C00458E07 /* ViewPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8C2ABB2D8FBC5C00458E07 /* ViewPlayerView.swift */; };
-/* End PBXBuildFile section */
-
 /* Begin PBXFileReference section */
-		4D27099C2D8C9CF9009B51ED /* NASA APOD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "NASA APOD.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		4D8C2AA32D8CF1C100458E07 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		4D8C2AA52D8CF1C100458E07 /* APOD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APOD.swift; sourceTree = "<group>"; };
-		4D8C2AA62D8CF1C100458E07 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		4D8C2AA72D8CF1C100458E07 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		4D8C2AA82D8CF1C100458E07 /* NASA_APODApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NASA_APODApp.swift; sourceTree = "<group>"; };
-		4D8C2AA92D8CF1C100458E07 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
-		4D8C2AB52D8CF7E300458E07 /* APODViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APODViewModel.swift; sourceTree = "<group>"; };
-		4D8C2AB92D8DC96900458E07 /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
-		4D8C2ABB2D8FBC5C00458E07 /* ViewPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewPlayerView.swift; sourceTree = "<group>"; };
+		4D209D292D91CA7100BA4394 /* APOD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = APOD.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		4D209D2B2D91CA7100BA4394 /* APOD */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = APOD;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
 /* Begin PBXFrameworksBuildPhase section */
-		4D2709992D8C9CF9009B51ED /* Frameworks */ = {
+		4D209D262D91CA7100BA4394 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -42,173 +29,103 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		4D2709932D8C9CF9009B51ED = {
+		4D209D202D91CA7100BA4394 = {
 			isa = PBXGroup;
 			children = (
-				4D8C2AAA2D8CF1C100458E07 /* NASA APOD */,
-				4D27099D2D8C9CF9009B51ED /* Products */,
+				4D209D2B2D91CA7100BA4394 /* APOD */,
+				4D209D2A2D91CA7100BA4394 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		4D27099D2D8C9CF9009B51ED /* Products */ = {
+		4D209D2A2D91CA7100BA4394 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4D27099C2D8C9CF9009B51ED /* NASA APOD.app */,
+				4D209D292D91CA7100BA4394 /* APOD.app */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		4D8C2AA42D8CF1C100458E07 /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				4D8C2AA32D8CF1C100458E07 /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
-			sourceTree = "<group>";
-		};
-		4D8C2AAA2D8CF1C100458E07 /* NASA APOD */ = {
-			isa = PBXGroup;
-			children = (
-				4D8C2AB82D8DC95900458E07 /* Utils */,
-				4D8C2AB72D8CF83900458E07 /* Network */,
-				4D8C2AB12D8CF29B00458E07 /* Model */,
-				4D8C2AB22D8CF2AA00458E07 /* View */,
-				4D8C2AB42D8CF79600458E07 /* ViewModel */,
-				4D8C2AA82D8CF1C100458E07 /* NASA_APODApp.swift */,
-				4D8C2AA62D8CF1C100458E07 /* Assets.xcassets */,
-				4D8C2AA42D8CF1C100458E07 /* Preview Content */,
-			);
-			path = "NASA APOD";
-			sourceTree = "<group>";
-		};
-		4D8C2AB12D8CF29B00458E07 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				4D8C2AA52D8CF1C100458E07 /* APOD.swift */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		4D8C2AB22D8CF2AA00458E07 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				4D8C2AA72D8CF1C100458E07 /* ContentView.swift */,
-				4D8C2ABB2D8FBC5C00458E07 /* ViewPlayerView.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		4D8C2AB42D8CF79600458E07 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				4D8C2AB52D8CF7E300458E07 /* APODViewModel.swift */,
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		4D8C2AB72D8CF83900458E07 /* Network */ = {
-			isa = PBXGroup;
-			children = (
-				4D8C2AA92D8CF1C100458E07 /* NetworkManager.swift */,
-			);
-			path = Network;
-			sourceTree = "<group>";
-		};
-		4D8C2AB82D8DC95900458E07 /* Utils */ = {
-			isa = PBXGroup;
-			children = (
-				4D8C2AB92D8DC96900458E07 /* ImageCache.swift */,
-			);
-			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		4D27099B2D8C9CF9009B51ED /* NASA APOD */ = {
+		4D209D282D91CA7100BA4394 /* APOD */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 4D2709AA2D8C9CFA009B51ED /* Build configuration list for PBXNativeTarget "NASA APOD" */;
+			buildConfigurationList = 4D209D372D91CA7200BA4394 /* Build configuration list for PBXNativeTarget "APOD" */;
 			buildPhases = (
-				4D2709982D8C9CF9009B51ED /* Sources */,
-				4D2709992D8C9CF9009B51ED /* Frameworks */,
-				4D27099A2D8C9CF9009B51ED /* Resources */,
+				4D209D252D91CA7100BA4394 /* Sources */,
+				4D209D262D91CA7100BA4394 /* Frameworks */,
+				4D209D272D91CA7100BA4394 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = "NASA APOD";
+			fileSystemSynchronizedGroups = (
+				4D209D2B2D91CA7100BA4394 /* APOD */,
+			);
+			name = APOD;
 			packageProductDependencies = (
 			);
-			productName = "NASA APOD";
-			productReference = 4D27099C2D8C9CF9009B51ED /* NASA APOD.app */;
+			productName = APOD;
+			productReference = 4D209D292D91CA7100BA4394 /* APOD.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		4D2709942D8C9CF9009B51ED /* Project object */ = {
+		4D209D212D91CA7100BA4394 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1620;
 				LastUpgradeCheck = 1620;
 				TargetAttributes = {
-					4D27099B2D8C9CF9009B51ED = {
+					4D209D282D91CA7100BA4394 = {
 						CreatedOnToolsVersion = 16.2;
 					};
 				};
 			};
-			buildConfigurationList = 4D2709972D8C9CF9009B51ED /* Build configuration list for PBXProject "NASA APOD" */;
+			buildConfigurationList = 4D209D242D91CA7100BA4394 /* Build configuration list for PBXProject "APOD" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
 			);
-			mainGroup = 4D2709932D8C9CF9009B51ED;
+			mainGroup = 4D209D202D91CA7100BA4394;
 			minimizedProjectReferenceProxies = 1;
 			preferredProjectObjectVersion = 77;
-			productRefGroup = 4D27099D2D8C9CF9009B51ED /* Products */;
+			productRefGroup = 4D209D2A2D91CA7100BA4394 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				4D27099B2D8C9CF9009B51ED /* NASA APOD */,
+				4D209D282D91CA7100BA4394 /* APOD */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		4D27099A2D8C9CF9009B51ED /* Resources */ = {
+		4D209D272D91CA7100BA4394 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4D8C2AAB2D8CF1C100458E07 /* Preview Assets.xcassets in Resources */,
-				4D8C2AAC2D8CF1C100458E07 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		4D2709982D8C9CF9009B51ED /* Sources */ = {
+		4D209D252D91CA7100BA4394 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4D8C2ABA2D8DC96900458E07 /* ImageCache.swift in Sources */,
-				4D8C2AB62D8CF7E300458E07 /* APODViewModel.swift in Sources */,
-				4D8C2AAD2D8CF1C100458E07 /* APOD.swift in Sources */,
-				4D8C2AAE2D8CF1C100458E07 /* ContentView.swift in Sources */,
-				4D8C2AAF2D8CF1C100458E07 /* NASA_APODApp.swift in Sources */,
-				4D8C2ABC2D8FBC5C00458E07 /* ViewPlayerView.swift in Sources */,
-				4D8C2AB02D8CF1C100458E07 /* NetworkManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		4D2709A82D8C9CFA009B51ED /* Debug */ = {
+		4D209D352D91CA7200BA4394 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -271,7 +188,7 @@
 			};
 			name = Debug;
 		};
-		4D2709A92D8C9CFA009B51ED /* Release */ = {
+		4D209D362D91CA7200BA4394 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -327,15 +244,14 @@
 			};
 			name = Release;
 		};
-		4D2709AB2D8C9CFA009B51ED /* Debug */ = {
+		4D209D382D91CA7200BA4394 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"NASA APOD/Preview Content\"";
-				DEVELOPMENT_TEAM = 6DC9LP75VX;
+				DEVELOPMENT_ASSET_PATHS = "\"APOD/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -343,13 +259,12 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.israman.somenews.NASA-APOD";
+				PRODUCT_BUNDLE_IDENTIFIER = com.israman.somenews.APOD;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -357,15 +272,14 @@
 			};
 			name = Debug;
 		};
-		4D2709AC2D8C9CFA009B51ED /* Release */ = {
+		4D209D392D91CA7200BA4394 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"NASA APOD/Preview Content\"";
-				DEVELOPMENT_TEAM = 6DC9LP75VX;
+				DEVELOPMENT_ASSET_PATHS = "\"APOD/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -373,13 +287,12 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.israman.somenews.NASA-APOD";
+				PRODUCT_BUNDLE_IDENTIFIER = com.israman.somenews.APOD;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -390,25 +303,25 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		4D2709972D8C9CF9009B51ED /* Build configuration list for PBXProject "NASA APOD" */ = {
+		4D209D242D91CA7100BA4394 /* Build configuration list for PBXProject "APOD" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				4D2709A82D8C9CFA009B51ED /* Debug */,
-				4D2709A92D8C9CFA009B51ED /* Release */,
+				4D209D352D91CA7200BA4394 /* Debug */,
+				4D209D362D91CA7200BA4394 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		4D2709AA2D8C9CFA009B51ED /* Build configuration list for PBXNativeTarget "NASA APOD" */ = {
+		4D209D372D91CA7200BA4394 /* Build configuration list for PBXNativeTarget "APOD" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				4D2709AB2D8C9CFA009B51ED /* Debug */,
-				4D2709AC2D8C9CFA009B51ED /* Release */,
+				4D209D382D91CA7200BA4394 /* Debug */,
+				4D209D392D91CA7200BA4394 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 4D2709942D8C9CF9009B51ED /* Project object */;
+	rootObject = 4D209D212D91CA7100BA4394 /* Project object */;
 }

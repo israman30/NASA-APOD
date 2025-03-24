@@ -13,5 +13,5 @@ struct APOD: Decodable {
     let hdurl: String?
     let media_type: String
     let title: String
-    let url: String
+    let url: String?
 }

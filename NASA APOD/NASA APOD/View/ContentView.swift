@@ -65,6 +65,9 @@ struct ContentView: View {
                         }
                     }
                 }
+            } else if viewModel.apod?.url == nil && viewModel.apod?.media_type == "other" {
+                Text("No image available")
+                    .font(.caption)
             } else {
                 ViewPlayerView(videoURLString: viewModel.apod?.url)
             }
