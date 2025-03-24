@@ -28,7 +28,6 @@ struct ContentView: View {
                 }
                 .task {
                     await fetchAPOD(date: viewModel.apod?.date ?? "")
-                    viewModel.retrieved()
                 }
                 
                 mainBody
@@ -39,13 +38,16 @@ struct ContentView: View {
     /// use` fetchAPOD()` for call viewModel object when View `appears` and `updates`
     private func fetchAPOD(date: String) async {
         await viewModel.fetchAPOD(with: date)
+        viewModel.retrieved()
     }
     
     private var mainBody: some View {
         /// Displays media content `(image, video, or placeholder)` based on the API response.
         VStack {
             if viewModel.apod?.hdurl != nil && viewModel.apod?.media_type == "image" {
-                if let urlString = viewModel.apod?.hdurl, let url = URL(string: urlString) {
+                if let urlString = viewModel.apod?.hdurl,
+                   let savedUrlString = viewModel.savedData?.hdurl,
+                   let url = URL(string: urlString.isEmpty ? savedUrlString : urlString) {
                     AsyncImage(url: url) { phase in
                         switch phase {
                         case .success(let image):
