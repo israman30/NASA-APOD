@@ -19,19 +19,24 @@ struct ContentView: View {
                 DatePicker(selection: $currentDate, displayedComponents: .date) {
                     Text("\(currentDate.formatted(.iso8601.year().month().day()))")
                 }
+                .padding(.horizontal)
                 .onChange(of: currentDate) { newValue in
                     self.currentDate = newValue
                     Task {
-                        await viewModel.fetchAPOD(with: currentDate.formatted(.iso8601.year().month().day()))
+                        await fetchAPOD(date: currentDate.formatted(.iso8601.year().month().day()))
                     }
                 }
                 .task {
-                    await viewModel.fetchAPOD(with: "2021-10-11")
+                    await fetchAPOD(date: viewModel.apod?.date ?? "")
                 }
                 
                 mainBody
             }
         }
+    }
+    
+    private func fetchAPOD(date: String) async {
+        await viewModel.fetchAPOD(with: date)
     }
     
     private var mainBody: some View {
@@ -63,15 +68,15 @@ struct ContentView: View {
                 ViewPlayerView(videoURLString: viewModel.apod?.url)
             }
             
-            Text(viewModel.apod?.title ?? "nothing")
+            Text(viewModel.apod?.title ?? "no title")
                 .font(.title2)
             
-            Text(viewModel.apod?.explanation ?? "nothing")
+            Text(viewModel.apod?.explanation ?? "not explanation")
                 .font(.body)
             
             HStack {
                 Spacer()
-                Text(viewModel.apod?.date ?? "nothing")
+                Text(viewModel.apod?.date ?? "not date")
                     .font(.body)
             }
             Spacer()
