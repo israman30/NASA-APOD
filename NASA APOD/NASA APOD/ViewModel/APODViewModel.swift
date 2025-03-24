@@ -16,9 +16,11 @@ protocol APODViewModelProtocol: ObservableObject {
 @MainActor
 final class APODViewModel: APODViewModelProtocol {
     @Published var apod: APOD?
+    @Published var savedData: APOD?
     @Published var error: NetworkError?
     @Published var currentDate = Date.now
     
+    private let savedKey = "savedData"
     private let networkManger: NetworkManager
     
     init(networkManger: NetworkManager) {
@@ -29,8 +31,26 @@ final class APODViewModel: APODViewModelProtocol {
         print("input date: \(date ?? "nada")")
         do {
             self.apod = try await networkManger.fetch(date: date)
+            self.save()
         } catch {
             self.error = .unknownError(statusCode: 0)
+        }
+    }
+    
+    func retrieved() {
+        if let data = UserDefaults.standard.data(forKey: savedKey) {
+            if let decoded = try? JSONDecoder().decode(APOD.self, from: data) {
+                print(decoded, "<-- decoded")
+                self.savedData = decoded
+                print(savedData.debugDescription, "<-- decoded")
+            }
+        }
+    }
+    
+    func save() {
+        if let encodedData = try? JSONEncoder().encode(apod) {
+            UserDefaults.standard.set(encodedData, forKey: savedKey)
+            print("data saved")
         }
     }
 }

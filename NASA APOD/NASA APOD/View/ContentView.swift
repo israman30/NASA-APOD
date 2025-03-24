@@ -28,6 +28,7 @@ struct ContentView: View {
                 }
                 .task {
                     await fetchAPOD(date: viewModel.apod?.date ?? "")
+                    viewModel.retrieved()
                 }
                 
                 mainBody
@@ -74,16 +75,24 @@ struct ContentView: View {
             }
             /// Section displaying text based on API response
             VStack {
-                Text(viewModel.apod?.title ?? "not title")
-                    .font(.title2)
+                if let title = viewModel.apod?.title,
+                   let savedTitle = viewModel.savedData?.title {
+                    Text(savedTitle.isEmpty ? title : savedTitle)
+                        .font(.title2)
+                }
                 
-                Text(viewModel.apod?.explanation ?? "not explanation")
-                    .font(.body)
+                if let explanation = viewModel.apod?.explanation,
+                   let savedExplanation = viewModel.savedData?.explanation {
+                    Text(savedExplanation.isEmpty ? explanation : savedExplanation)
+                        .font(.body)
+                }
                 
                 HStack {
                     Spacer()
-                    Text("Current date: \(viewModel.apod?.date ?? "not date")")
-                        .font(.body)
+                    if let date = viewModel.apod?.date, let saveDate = viewModel.savedData?.date {
+                        Text("Current date: \(saveDate.isEmpty ? date : saveDate)")
+                            .font(.body)
+                    }
                 }
                 Spacer()
             }
