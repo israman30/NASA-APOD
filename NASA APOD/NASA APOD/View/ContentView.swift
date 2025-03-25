@@ -13,6 +13,7 @@ struct ContentView: View {
     @StateObject private var viewModel = APODViewModel(networkManger: NetworkManager())
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     
+    /// Adjusts the body layout based on the device's `verticalSizeClass`, applying functionalities `specific` to each orientation.
     var body: some View {
         NavigationView {
             if verticalSizeClass == .regular {
@@ -21,12 +22,13 @@ struct ContentView: View {
                 landscapeMode
             }
         }
+        .navigationViewStyle(StackNavigationViewStyle()) /// `iPad` support
     }
     
     /// use` fetchAPOD()` for call viewModel object when View `appears` and `updates`
     private func fetchAPOD(date: String) async {
         await viewModel.fetchAPOD(with: date)
-        viewModel.retrieved()
+        viewModel.retrieve()
     }
     
     @ViewBuilder

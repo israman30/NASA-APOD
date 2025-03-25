@@ -13,8 +13,14 @@ protocol APODViewModelProtocol: ObservableObject {
     func fetchAPOD(with date: String?) async
 }
 
+/// `LocalStorageProtocol` defines methods for saving and retrieving data from local storage.
+protocol LocalStorageProtocol {
+    func save() async
+    func retrieve() async
+}
+
 @MainActor
-final class APODViewModel: APODViewModelProtocol {
+final class APODViewModel: APODViewModelProtocol, LocalStorageProtocol {
     @Published var apod: APOD?
     @Published var error: NetworkError?
     @Published var currentDate = Date.now
@@ -36,7 +42,8 @@ final class APODViewModel: APODViewModelProtocol {
         }
     }
     
-    func retrieved() {
+    /// `Retrieves` and `decodes` data from local storage, assigning it to the `apod` object.
+    func retrieve() {
         if let data = UserDefaults.standard.data(forKey: savedKey) {
             if let decoded = try? JSONDecoder().decode(APOD.self, from: data) {
                 self.apod = decoded
@@ -45,6 +52,7 @@ final class APODViewModel: APODViewModelProtocol {
         }
     }
     
+    /// `Encode` and `save` data to local storage using a specified key
     func save() {
         if let encodedData = try? JSONEncoder().encode(apod) {
             UserDefaults.standard.set(encodedData, forKey: savedKey)
