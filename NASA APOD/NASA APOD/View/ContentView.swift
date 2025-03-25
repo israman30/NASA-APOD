@@ -124,6 +124,7 @@ struct ContentView: View {
             
         }
         .navigationTitle("NASA APOD")
+        .accessibilityHeading(.h1)
     }
     
     private var informationBody: some View {
@@ -132,6 +133,8 @@ struct ContentView: View {
             if let title = viewModel.apod?.title {
                 Text(title)
                     .font(.title2)
+                    .accessibilityAddTraits(.isHeader)
+                    .accessibilityHeading(.h2)
             }
             
             if let explanation = viewModel.apod?.explanation {
