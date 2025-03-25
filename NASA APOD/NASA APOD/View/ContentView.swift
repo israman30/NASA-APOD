@@ -46,8 +46,7 @@ struct ContentView: View {
         VStack {
             if viewModel.apod?.hdurl != nil && viewModel.apod?.media_type == "image" {
                 if let urlString = viewModel.apod?.hdurl,
-                   let savedUrlString = viewModel.savedData?.hdurl,
-                   let url = URL(string: urlString.isEmpty ? savedUrlString : urlString) {
+                   let url = URL(string: urlString) {
                     AsyncImage(url: url) { phase in
                         switch phase {
                         case .success(let image):
@@ -55,9 +54,7 @@ struct ContentView: View {
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                         case .empty:
-                            Image(systemName: "photo.artframe")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
+                            CacheAsyncImage(url: url)
                         case .failure(_):
                             Image(systemName: "photo.artframe")
                                 .resizable()
@@ -77,22 +74,20 @@ struct ContentView: View {
             }
             /// Section displaying text based on API response
             VStack {
-                if let title = viewModel.apod?.title,
-                   let savedTitle = viewModel.savedData?.title {
-                    Text(savedTitle.isEmpty ? title : savedTitle)
+                if let title = viewModel.apod?.title {
+                    Text(title)
                         .font(.title2)
                 }
                 
-                if let explanation = viewModel.apod?.explanation,
-                   let savedExplanation = viewModel.savedData?.explanation {
-                    Text(savedExplanation.isEmpty ? explanation : savedExplanation)
+                if let explanation = viewModel.apod?.explanation {
+                    Text(explanation)
                         .font(.body)
                 }
                 
                 HStack {
                     Spacer()
-                    if let date = viewModel.apod?.date, let saveDate = viewModel.savedData?.date {
-                        Text("Current date: \(saveDate.isEmpty ? date : saveDate)")
+                    if let date = viewModel.apod?.date {
+                        Text("Current date: \(date)")
                             .font(.body)
                     }
                 }

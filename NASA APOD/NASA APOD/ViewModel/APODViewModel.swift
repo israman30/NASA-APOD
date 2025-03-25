@@ -16,7 +16,6 @@ protocol APODViewModelProtocol: ObservableObject {
 @MainActor
 final class APODViewModel: APODViewModelProtocol {
     @Published var apod: APOD?
-    @Published var savedData: APOD?
     @Published var error: NetworkError?
     @Published var currentDate = Date.now
     
@@ -40,9 +39,8 @@ final class APODViewModel: APODViewModelProtocol {
     func retrieved() {
         if let data = UserDefaults.standard.data(forKey: savedKey) {
             if let decoded = try? JSONDecoder().decode(APOD.self, from: data) {
-                print(decoded, "<-- decoded")
-                self.savedData = decoded
-                print(savedData.debugDescription, "<-- decoded")
+                self.apod = decoded
+                print(apod.debugDescription, "<-- DEBUG: decoded data")
             }
         }
     }
@@ -50,7 +48,7 @@ final class APODViewModel: APODViewModelProtocol {
     func save() {
         if let encodedData = try? JSONEncoder().encode(apod) {
             UserDefaults.standard.set(encodedData, forKey: savedKey)
-            print("data saved")
+            print("DEBUG: data saved")
         }
     }
 }
