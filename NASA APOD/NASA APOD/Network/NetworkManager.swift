@@ -48,7 +48,12 @@ protocol NetworkManagerProtocol {
     func fetch<T: Decodable>(date: String?) async throws -> T
 }
 
-class NetworkManager: NetworkManagerProtocol {
+/// `QueryItemProtocol` defines the method for querying an item in the endpoint.
+protocol QueryItemProtocol {
+    func query(with date: String?) async throws -> URL
+}
+
+class NetworkManager: NetworkManagerProtocol, QueryItemProtocol {
     
     func fetch<T: Decodable>(date: String?) async throws -> T {
         let url = try await query(with: date)
