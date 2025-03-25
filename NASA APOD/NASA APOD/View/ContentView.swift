@@ -36,8 +36,12 @@ struct ContentView: View {
         ScrollView {
             VStack {
                 DatePicker(selection: $viewModel.currentDate, displayedComponents: .date) {
-                    Text("Select Date")
+                    Text("Date")
                         .font(.body)
+                        /// Defined methods for supporting `maximum` font sizes
+                        .minimumScaleFactor(0.01)
+                        .lineLimit(1)
+                        .accessibilityElement(children: .ignore)
                 }
                 .padding(.horizontal)
                 .onChange(of: viewModel.currentDate) { newValue in
@@ -63,6 +67,10 @@ struct ContentView: View {
                 DatePicker(selection: $viewModel.currentDate, displayedComponents: .date) {
                     Text("Select Date")
                         .font(.body)
+                        /// Defined methods for supporting `maximum` font sizes
+                        .minimumScaleFactor(0.01)
+                        .lineLimit(1)
+                        .accessibilityElement(children: .ignore)
                 }
                 .padding(.horizontal)
                 .onChange(of: viewModel.currentDate) { newValue in
