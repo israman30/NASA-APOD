@@ -54,9 +54,7 @@ struct ContentView: View {
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                         case .empty:
-                            Image(systemName: "photo.artframe")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
+                            CacheAsyncImage(url: url)
                         case .failure(_):
                             Image(systemName: "photo.artframe")
                                 .resizable()

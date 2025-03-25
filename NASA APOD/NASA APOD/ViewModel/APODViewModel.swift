@@ -39,9 +39,8 @@ final class APODViewModel: APODViewModelProtocol {
     func retrieved() {
         if let data = UserDefaults.standard.data(forKey: savedKey) {
             if let decoded = try? JSONDecoder().decode(APOD.self, from: data) {
-                print(decoded, "<-- decoded")
                 self.apod = decoded
-                print(apod.debugDescription, "<-- decoded data")
+                print(apod.debugDescription, "<-- DEBUG: decoded data")
             }
         }
     }
@@ -49,7 +48,7 @@ final class APODViewModel: APODViewModelProtocol {
     func save() {
         if let encodedData = try? JSONEncoder().encode(apod) {
             UserDefaults.standard.set(encodedData, forKey: savedKey)
-            print("data saved")
+            print("DEBUG: data saved")
         }
     }
 }
