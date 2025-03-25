@@ -11,10 +11,28 @@ import SwiftUI
 struct ContentView: View {
     
     @StateObject private var viewModel = APODViewModel(networkManger: NetworkManager())
+    @Environment(\.verticalSizeClass) private var verticalSizeClass
     
     var body: some View {
         NavigationView {
-            ScrollView {
+            if verticalSizeClass == .regular {
+                portrainMode
+            } else {
+                landscapeMode
+            }
+        }
+    }
+    
+    /// use` fetchAPOD()` for call viewModel object when View `appears` and `updates`
+    private func fetchAPOD(date: String) async {
+        await viewModel.fetchAPOD(with: date)
+        viewModel.retrieved()
+    }
+    
+    @ViewBuilder
+    private var portrainMode: some View {
+        ScrollView {
+            VStack {
                 DatePicker(selection: $viewModel.currentDate, displayedComponents: .date) {
                     Text("Select Date")
                         .font(.body)
@@ -30,18 +48,39 @@ struct ContentView: View {
                     await fetchAPOD(date: viewModel.apod?.date ?? "")
                 }
                 
-                mainBody
+                mediaBody
+                informationBody
             }
         }
     }
     
-    /// use` fetchAPOD()` for call viewModel object when View `appears` and `updates`
-    private func fetchAPOD(date: String) async {
-        await viewModel.fetchAPOD(with: date)
-        viewModel.retrieved()
+    @ViewBuilder
+    private var landscapeMode: some View {
+        HStack {
+            VStack {
+                DatePicker(selection: $viewModel.currentDate, displayedComponents: .date) {
+                    Text("Select Date")
+                        .font(.body)
+                }
+                .padding(.horizontal)
+                .onChange(of: viewModel.currentDate) { newValue in
+                    self.viewModel.currentDate = newValue
+                    Task {
+                        await fetchAPOD(date: viewModel.currentDate.formatted(.iso8601.year().month().day()))
+                    }
+                }
+                .task {
+                    await fetchAPOD(date: viewModel.apod?.date ?? "")
+                }
+                mediaBody
+            }
+            ScrollView {
+                informationBody
+            }
+        }
     }
     
-    private var mainBody: some View {
+    private var mediaBody: some View {
         /// Displays media content `(image, video, or placeholder)` based on the API response.
         VStack {
             if viewModel.apod?.hdurl != nil && viewModel.apod?.media_type == "image" {
@@ -72,30 +111,34 @@ struct ContentView: View {
             } else {
                 ViewPlayerView(videoURLString: viewModel.apod?.url)
             }
-            /// Section displaying text based on API response
-            VStack {
-                if let title = viewModel.apod?.title {
-                    Text(title)
-                        .font(.title2)
-                }
-                
-                if let explanation = viewModel.apod?.explanation {
-                    Text(explanation)
-                        .font(.body)
-                }
-                
-                HStack {
-                    Spacer()
-                    if let date = viewModel.apod?.date {
-                        Text("Current date: \(date)")
-                            .font(.body)
-                    }
-                }
-                Spacer()
-            }
-            .padding()
+            
         }
         .navigationTitle("NASA APOD")
+    }
+    
+    private var informationBody: some View {
+        /// Section displaying text based on API response
+        VStack {
+            if let title = viewModel.apod?.title {
+                Text(title)
+                    .font(.title2)
+            }
+            
+            if let explanation = viewModel.apod?.explanation {
+                Text(explanation)
+                    .font(.body)
+            }
+            
+            HStack {
+                Spacer()
+                if let date = viewModel.apod?.date {
+                    Text("Current date: \(date)")
+                        .font(.body)
+                }
+            }
+            Spacer()
+        }
+        .padding()
     }
 }
 
