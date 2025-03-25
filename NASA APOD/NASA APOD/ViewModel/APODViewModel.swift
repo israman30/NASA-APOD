@@ -33,7 +33,7 @@ final class APODViewModel: APODViewModelProtocol, LocalStorageProtocol {
     }
     
     func fetchAPOD(with date: String?) async {
-        print("input date: \(date ?? "nada")")
+        print("DEBUG: \(date ?? "no date found")")
         do {
             self.apod = try await networkManger.fetch(date: date)
             self.save()
