@@ -13,8 +13,13 @@ protocol APODViewModelProtocol: ObservableObject {
     func fetchAPOD(with date: String?) async
 }
 
+protocol PersistingDataProtocol {
+    func save() async
+    func retrieve() async
+}
+
 @MainActor
-final class APODViewModel: APODViewModelProtocol {
+final class APODViewModel: APODViewModelProtocol, PersistingDataProtocol {
     @Published var apod: APOD?
     @Published var savedData: APOD?
     @Published var error: NetworkError?
@@ -31,13 +36,13 @@ final class APODViewModel: APODViewModelProtocol {
         print("input date: \(date ?? "nada")")
         do {
             self.apod = try await networkManger.fetch(date: date)
-            self.save()
+            await self.save()
         } catch {
             self.error = .unknownError(statusCode: 0)
         }
     }
     
-    func retrieved() {
+    func retrieve() async {
         if let data = UserDefaults.standard.data(forKey: savedKey) {
             if let decoded = try? JSONDecoder().decode(APOD.self, from: data) {
                 print(decoded, "<-- decoded")
@@ -47,7 +52,7 @@ final class APODViewModel: APODViewModelProtocol {
         }
     }
     
-    func save() {
+    func save() async {
         if let encodedData = try? JSONEncoder().encode(apod) {
             UserDefaults.standard.set(encodedData, forKey: savedKey)
             print("data saved")

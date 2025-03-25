@@ -11,26 +11,51 @@ import SwiftUI
 struct ContentView: View {
     
     @StateObject private var viewModel = APODViewModel(networkManger: NetworkManager())
+    @Environment(\.verticalSizeClass) var verticalSizeClass
     
     var body: some View {
         NavigationView {
-            ScrollView {
-                DatePicker(selection: $viewModel.currentDate, displayedComponents: .date) {
-                    Text("Select Date")
-                        .font(.body)
-                }
-                .padding(.horizontal)
-                .onChange(of: viewModel.currentDate) { newValue in
-                    self.viewModel.currentDate = newValue
-                    Task {
-                        await fetchAPOD(date: viewModel.currentDate.formatted(.iso8601.year().month().day()))
+            if verticalSizeClass == .regular {
+                ScrollView {
+                    DatePicker(selection: $viewModel.currentDate, displayedComponents: .date) {
+                        Text("Select Date")
+                            .font(.body)
                     }
+                    .padding(.horizontal)
+                    .onChange(of: viewModel.currentDate) { newValue in
+                        self.viewModel.currentDate = newValue
+                        Task {
+                            await fetchAPOD(date: viewModel.currentDate.formatted(.iso8601.year().month().day()))
+                        }
+                    }
+                    .task {
+                        await fetchAPOD(date: viewModel.apod?.date ?? "")
+                    }
+                    
+                    mediaBody
+                    informationBody
                 }
-                .task {
-                    await fetchAPOD(date: viewModel.apod?.date ?? "")
+            } else {
+                HStack {
+                    VStack {
+                        DatePicker(selection: $viewModel.currentDate, displayedComponents: .date) {
+                            Text("Select Date")
+                                .font(.body)
+                        }
+                        .padding(.horizontal)
+                        .onChange(of: viewModel.currentDate) { newValue in
+                            self.viewModel.currentDate = newValue
+                            Task {
+                                await fetchAPOD(date: viewModel.currentDate.formatted(.iso8601.year().month().day()))
+                            }
+                        }
+                        .task {
+                            await fetchAPOD(date: viewModel.apod?.date ?? "")
+                        }
+                        mediaBody
+                    }
+                    informationBody
                 }
-                
-                mainBody
             }
         }
     }
@@ -38,10 +63,10 @@ struct ContentView: View {
     /// use` fetchAPOD()` for call viewModel object when View `appears` and `updates`
     private func fetchAPOD(date: String) async {
         await viewModel.fetchAPOD(with: date)
-        viewModel.retrieved()
+        await viewModel.retrieve()
     }
     
-    private var mainBody: some View {
+    private var mediaBody: some View {
         /// Displays media content `(image, video, or placeholder)` based on the API response.
         VStack {
             if viewModel.apod?.hdurl != nil && viewModel.apod?.media_type == "image" {
@@ -75,32 +100,36 @@ struct ContentView: View {
             } else {
                 ViewPlayerView(videoURLString: viewModel.apod?.url)
             }
-            /// Section displaying text based on API response
-            VStack {
-                if let title = viewModel.apod?.title,
-                   let savedTitle = viewModel.savedData?.title {
-                    Text(savedTitle.isEmpty ? title : savedTitle)
-                        .font(.title2)
-                }
-                
-                if let explanation = viewModel.apod?.explanation,
-                   let savedExplanation = viewModel.savedData?.explanation {
-                    Text(savedExplanation.isEmpty ? explanation : savedExplanation)
-                        .font(.body)
-                }
-                
-                HStack {
-                    Spacer()
-                    if let date = viewModel.apod?.date, let saveDate = viewModel.savedData?.date {
-                        Text("Current date: \(saveDate.isEmpty ? date : saveDate)")
-                            .font(.body)
-                    }
-                }
-                Spacer()
-            }
-            .padding()
+            
         }
         .navigationTitle("NASA APOD")
+    }
+    
+    private var informationBody: some View {
+        /// Section displaying text based on API response
+        VStack {
+            if let title = viewModel.apod?.title,
+               let savedTitle = viewModel.savedData?.title {
+                Text(savedTitle.isEmpty ? title : savedTitle)
+                    .font(.title2)
+            }
+            
+            if let explanation = viewModel.apod?.explanation,
+               let savedExplanation = viewModel.savedData?.explanation {
+                Text(savedExplanation.isEmpty ? explanation : savedExplanation)
+                    .font(.body)
+            }
+            
+            HStack {
+                Spacer()
+                if let date = viewModel.apod?.date, let saveDate = viewModel.savedData?.date {
+                    Text("Current date: \(saveDate.isEmpty ? date : saveDate)")
+                        .font(.body)
+                }
+            }
+            Spacer()
+        }
+        .padding()
     }
 }
 
